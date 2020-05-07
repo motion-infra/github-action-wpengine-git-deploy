@@ -30,9 +30,17 @@ chmod 644 "$WPENGINE_SSH_KEY_PUBLIC_PATH"
 
 echo $BRANCH
 
-git config core.sshCommand "ssh -i $WPENGINE_SSH_KEY_PRIVATE_PATH -o UserKnownHostsFile=$KNOWN_HOSTS_PATH"
-git remote add $WPENGINE_ENV git@$WPENGINE_HOST:$WPENGINE_ENV/$WPENGINE_ENVIRONMENT_NAME.git
+pwd
+ls -l
 
-git pull --commit $WPENGINE_ENV master --allow-unrelated-histories
+git diff
+
+git config core.sshCommand "ssh -i $WPENGINE_SSH_KEY_PRIVATE_PATH -o UserKnownHostsFile=$KNOWN_HOSTS_PATH"
+
+cd ../ && mkdir _tmp && cd _tmp && git clone git@$WPENGINE_HOST:$WPENGINE_ENV/$WPENGINE_ENVIRONMENT_NAME.git .
+
+ls -l
+
+pwd
 
 # git push -fu $WPENGINE_ENV $BRANCH:master
