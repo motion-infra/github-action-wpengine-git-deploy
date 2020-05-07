@@ -28,11 +28,16 @@ chmod 644 "$KNOWN_HOSTS_PATH"
 chmod 600 "$WPENGINE_SSH_KEY_PRIVATE_PATH"
 chmod 644 "$WPENGINE_SSH_KEY_PUBLIC_PATH"
 
+echo $BRANCH
+
 git config core.sshCommand "ssh -i $WPENGINE_SSH_KEY_PRIVATE_PATH -o UserKnownHostsFile=$KNOWN_HOSTS_PATH"
 git remote add $WPENGINE_ENV git@$WPENGINE_HOST:$WPENGINE_ENV/$WPENGINE_ENVIRONMENT_NAME.git
 
+git fetch $WPENGINE_ENV
+
+git rebase --onto $BRANCH --root $WPENGINE_ENV/master
+
 git pull $WPENGINE_ENV master
 
-echo $BRANCH
 
 # git push -fu $WPENGINE_ENV $BRANCH:master
